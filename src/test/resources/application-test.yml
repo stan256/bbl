@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:bbl;MODE=POSTGRESQL;
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: validate
+  flyway:
+    enabled: true
+    url: ${spring.datasource.url}
+    locations: classpath:db/migration, classpath:db/test
+    schemas: springtest
