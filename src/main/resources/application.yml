@@ -7,7 +7,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: booblschema
     show-sql: true
 
 ---
@@ -37,4 +36,3 @@ spring:
     password: ${spring.datasource.password}
     user: ${spring.datasource.username}
     locations: classpath:db/migration
-    schemas: booblschema

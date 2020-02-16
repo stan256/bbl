@@ -1,5 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS "booblschema";
-
 CREATE TABLE IF NOT EXISTS "user"
 (
     id           bigserial primary key,
