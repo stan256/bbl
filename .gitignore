@@ -29,6 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/java/com/github/stan256/springtest/GraphQL/
+src/main/java/com/github/stan256/bblaccount/GraphQL/
 src/main/resources/static/
 src/main/resources/templates/

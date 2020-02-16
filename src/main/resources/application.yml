@@ -1,17 +1,40 @@
 spring:
+  profiles:
+    active: local-dev
   datasource:
-    url: jdbc:postgresql://192.168.99.100:5432/test
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: booblschema
+    show-sql: true
+
+---
+spring:
+  profiles: integration-test
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: create-drop
+  flyway:
+    locations: classpath:db/migration
+
+---
+spring:
+  profiles: local-dev
+  datasource:
+    # User has to have GRANT CREATE EXTENSION for script execution
+    url: jdbc:postgresql://localhost:5432/test
     username: testuser
     password: testuser
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: validate
   flyway:
-    enabled: true
     url: ${spring.datasource.url}
     password: ${spring.datasource.password}
     user: ${spring.datasource.username}
     locations: classpath:db/migration
-    schemas: springtest
+    schemas: booblschema

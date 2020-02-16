@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS "user";
+CREATE SCHEMA IF NOT EXISTS "booblschema";
+
 CREATE TABLE IF NOT EXISTS "user"
 (
     id           bigserial primary key,
@@ -9,7 +10,6 @@ CREATE TABLE IF NOT EXISTS "user"
 );
 
 
-DROP TABLE IF EXISTS product_category;
 CREATE TABLE IF NOT EXISTS product_category
 (
     id           bigserial primary key,
@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS product_category
     last_updated timestamp   NOT NULL default now()
 );
 
-DROP TABLE IF EXISTS product;
 CREATE TABLE IF NOT EXISTS product
 (
     id           bigserial primary key,
@@ -27,7 +26,6 @@ CREATE TABLE IF NOT EXISTS product
     last_updated timestamp   NOT NULL default now()
 );
 
-DROP TABLE IF EXISTS user_product;
 CREATE TABLE IF NOT EXISTS user_product
 (
     user_id      bigint REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE,
