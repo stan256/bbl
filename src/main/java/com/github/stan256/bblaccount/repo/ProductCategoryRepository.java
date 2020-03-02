@@ -1,4 +1,4 @@
-package com.github.stan256.bblaccount;
+package com.github.stan256.bblaccount.repo;
 
 import com.github.stan256.bblaccount.model.ProductCategory;
 import org.springframework.data.repository.CrudRepository;

@@ -1,5 +1,6 @@
 package com.github.stan256.bblaccount;
 
+import com.github.stan256.bblaccount.repo.ProductCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Slf4j
 @SpringBootApplication
 @EnableJpaRepositories
-public class SpringTestApplication {
+public class BblApplication {
   @Autowired
   public ProductCategoryRepository productCategoryRepository;
 
@@ -23,6 +24,6 @@ public class SpringTestApplication {
   }
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringTestApplication.class, args);
+    SpringApplication.run(BblApplication.class, args);
   }
 }

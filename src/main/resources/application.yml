@@ -7,17 +7,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: validate
     show-sql: true
 
 ---
 spring:
   profiles: integration-test
-  jpa:
-    properties:
-      hibernate:
-        ddl-auto: create-drop
   flyway:
-    locations: classpath:db/migration
+    locations: classpath:db/migration, classpath:db/integration-test
 
 ---
 spring:
@@ -25,12 +22,8 @@ spring:
   datasource:
     # User has to have GRANT CREATE EXTENSION for script execution
     url: jdbc:postgresql://localhost:5432/test
-    username: testuser
-    password: testuser
-  jpa:
-    properties:
-      hibernate:
-        ddl-auto: validate
+    username: postgres
+    password: postgres
   flyway:
     url: ${spring.datasource.url}
     password: ${spring.datasource.password}

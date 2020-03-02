@@ -1,16 +1,13 @@
 package com.github.stan256.bblaccount.sql;
 
-import com.github.stan256.bblaccount.SpringTestApplication;
+import com.github.stan256.bblaccount.BblApplication;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("integration-test")
-@SpringBootTest(classes = {SpringTestApplication.class, BaseRepositoryTest.DbConfig.class})
+@SpringBootTest(classes = {BblApplication.class, BaseRepositoryTest.DbConfig.class})
 public class BaseRepositoryTest {
+  @Rule
+  @Autowired
+  private DbCleanup dbCleanup;
 
   public void commitAndStartNewTransaction() {
     TestTransaction.flagForCommit();

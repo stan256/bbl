@@ -1,8 +1,8 @@
-CREATE TABLE IF NOT EXISTS "user"
+CREATE TABLE IF NOT EXISTS users
 (
     id           bigserial primary key,
     first_name   varchar(40) NOT NULL,
-    second_name  varchar(40) NOT NULL,
+    last_name    varchar(40) NOT NULL,
     age          int         not null,
     last_updated timestamp   NOT NULL DEFAULT now()
 );
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS product
 
 CREATE TABLE IF NOT EXISTS user_product
 (
-    user_id      bigint REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    user_id      bigint REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
     product_id   bigint REFERENCES product (id) ON UPDATE CASCADE ON DELETE CASCADE,
     amount       integer   NOT NULL DEFAULT 1,
     last_updated timestamp NOT NULL default now(),
@@ -43,7 +43,7 @@ EXECUTE PROCEDURE moddatetime(last_updated);
 
 CREATE TRIGGER user_moddatetime
     BEFORE UPDATE
-    ON "user"
+    ON users
     FOR EACH ROW
 EXECUTE PROCEDURE moddatetime(last_updated);
 
