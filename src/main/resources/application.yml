@@ -21,8 +21,8 @@ spring:
   profiles: local-dev
   datasource:
     # User has to have GRANT CREATE EXTENSION for script execution
-    url: jdbc:postgresql://localhost:5432/test
-    username: postgres
+    url: jdbc:postgresql://bblaccount:5432/bbl
+    username: bbladmin
     password: postgres
   flyway:
     url: ${spring.datasource.url}
