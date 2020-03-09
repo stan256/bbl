@@ -16,13 +16,6 @@ public class BblApplication {
   @Autowired
   public ProductCategoryRepository productCategoryRepository;
 
-  @Bean
-  public CommandLineRunner runner() {
-    return (a) -> {
-      log.warn(String.valueOf(productCategoryRepository.findAll()));
-    };
-  }
-
   public static void main(String[] args) {
     SpringApplication.run(BblApplication.class, args);
   }

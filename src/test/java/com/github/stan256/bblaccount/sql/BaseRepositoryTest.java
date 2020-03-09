@@ -3,6 +3,8 @@ package com.github.stan256.bblaccount.sql;
 import com.github.stan256.bblaccount.BblApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Rule;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,9 +30,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("integration-test")
 @SpringBootTest(classes = {BblApplication.class, BaseRepositoryTest.DbConfig.class})
 public class BaseRepositoryTest {
-  @Rule
   @Autowired
   private DbCleanup dbCleanup;
+
+  @BeforeEach
+  private void cleanDb(){
+    dbCleanup.cleanup();
+  }
 
   public void commitAndStartNewTransaction() {
     TestTransaction.flagForCommit();

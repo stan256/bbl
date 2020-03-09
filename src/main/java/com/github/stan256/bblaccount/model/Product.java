@@ -21,5 +21,6 @@ public class Product {
   @Column
   private LocalDateTime lastUpdated;
   @OneToOne
+  @JoinColumn(name = "category", referencedColumnName = "id")
   private ProductCategory productCategory;
 }

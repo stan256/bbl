@@ -15,11 +15,6 @@ class UserRepositoryTest extends BaseRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @BeforeEach
-    public void before(){
-        userRepository.deleteAll();
-    }
-
     @Test
     public void exactAmount(){
         User stas = new User();
@@ -37,23 +32,4 @@ class UserRepositoryTest extends BaseRepositoryTest {
         List<User> all = userRepository.findAll();
         assertEquals(2, all.size());
     }
-
-    @Test
-    public void exactAmount2(){
-        User stas = new User();
-        stas.setFirstName("Stanislav");
-        stas.setLastName("Studzinskyi");
-        stas.setAge(25);
-
-        User nellia = new User();
-        nellia.setFirstName("Nellia");
-        nellia.setLastName("Salimova");
-        nellia.setAge(25);
-
-        userRepository.save(stas);
-        userRepository.save(nellia);
-        List<User> all = userRepository.findAll();
-        assertEquals(2, all.size());
-    }
-
 }
