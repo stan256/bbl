@@ -14,6 +14,5 @@ public class DbCleanup extends ExternalResource {
 
     public void cleanup() {
         jdbcTemplate.execute("DELETE FROM users");
-        jdbcTemplate.execute("DELETE FROM product");
     }
 }

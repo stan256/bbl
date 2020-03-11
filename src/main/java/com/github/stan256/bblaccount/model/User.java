@@ -21,11 +21,4 @@ public class User {
   @Column
   private int age;
   private LocalDateTime lastUpdated = LocalDateTime.now();
-  @ManyToMany(cascade = {CascadeType.ALL})
-  @JoinTable(
-      name = "user_product",
-      joinColumns = {@JoinColumn(name = "user_id")},
-      inverseJoinColumns = {@JoinColumn(name = "product_id")}
-  )
-  List<Product> products;
 }
