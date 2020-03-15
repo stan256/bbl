@@ -8,8 +8,5 @@ import java.util.Optional;
 
 @RepositoryRestController
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findUserByFirstNameAndLastNameOrderByFirstName(String firstName, String lastName);
-    Optional<User> findByFirstNameAndLastName(String firstName, String lastName);
-    Boolean existsByFirstNameAndLastName(String firstName, String lastName);
-    Boolean existsByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

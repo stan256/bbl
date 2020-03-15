@@ -9,9 +9,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: validate
     show-sql: true
-application:
-  jwtSecret: jwtTestSecret
-  jwtExpirationMs: 86400000
 
 ---
 spring:

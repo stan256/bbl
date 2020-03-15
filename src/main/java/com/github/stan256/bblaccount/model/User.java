@@ -3,12 +3,8 @@ package com.github.stan256.bblaccount.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -46,11 +42,12 @@ public class User {
   private int age;
 
   @ManyToMany
-  @JoinTable(	name = "user_roles",
+  @JoinTable(name = "user_roles",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<UserRole> userRoles;
 
   @Column
+  @Past
   private LocalDateTime lastUpdated = LocalDateTime.now();
 }
