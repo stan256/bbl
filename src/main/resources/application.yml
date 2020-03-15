@@ -10,7 +10,7 @@ spring:
         ddl-auto: validate
     show-sql: true
 application:
-  jwtSecret: bezKoderSecretKey
+  jwtSecret: jwtTestSecret
   jwtExpirationMs: 86400000
 
 ---
