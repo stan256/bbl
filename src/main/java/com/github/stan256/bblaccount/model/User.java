@@ -1,16 +1,19 @@
 package com.github.stan256.bblaccount.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "users")
 @NoArgsConstructor
-public class User {
+public class User extends DateAudit{
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id")
   @SequenceGenerator(name = "user_id", sequenceName = "users_id_seq", initialValue = 0, allocationSize = 1)
@@ -29,6 +32,7 @@ public class User {
   @Column
   @Size(max = 50)
   @NotBlank
+  @Email
   private String email;
 
   @Column
@@ -41,13 +45,10 @@ public class User {
   @Min(0)
   private int age;
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "user_roles",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<UserRole> userRoles;
-
-  @Column
-  @Past
-  private LocalDateTime lastUpdated = LocalDateTime.now();
+  private List<UserRole> userRoles;
 }
+

@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @RepositoryRestController
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
-    Optional<UserRole> findByUserRole(UserRoleEnum role);
+    Optional<UserRole> findByRole(UserRoleEnum role);
 }
