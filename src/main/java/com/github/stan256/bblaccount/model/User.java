@@ -19,7 +19,7 @@ public class User extends DateAudit{
   @SequenceGenerator(name = "user_id", sequenceName = "users_id_seq", initialValue = 0, allocationSize = 1)
   private long id;
 
-  @Column
+  @Column(nullable = false)
   @Size(max = 30)
   @NotBlank
   private String firstName;
@@ -29,26 +29,32 @@ public class User extends DateAudit{
   @NotBlank
   private String lastName;
 
-  @Column
+  @Column(nullable = false, unique = true)
   @Size(max = 50)
   @NotBlank
   @Email
   private String email;
 
-  @Column
+  @Column(nullable = false)
   @Size(max = 40)
   @NotBlank
   private String password;
 
-  @Column
+  @Column(nullable = false)
   @Max(150)
-  @Min(0)
+  @Min(1)
   private int age;
+
+  @Column(nullable = false)
+  private Boolean isEmailVerified;
+
+  @Column(nullable = false)
+  private Boolean active;
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "user_roles",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private List<UserRole> userRoles;
+  private List<UserRole> roles;
 }
 

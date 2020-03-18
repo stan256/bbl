@@ -9,6 +9,12 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: validate
     show-sql: true
+app:
+  jwt:
+    secret: test@secret
+    expiration: 86400000
+    header: Authorization
+    prefix: Bearer
 
 ---
 spring:

@@ -6,6 +6,5 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class AuthControllerAdvice {
-// todo
 
 }
