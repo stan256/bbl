@@ -15,7 +15,18 @@ app:
     expiration: 86400000
     header: Authorization
     prefix: Bearer
-
+  token:
+    email:
+      verification:
+        duration: 3600000
+    password:
+      reset:
+        duration: 3600000
+    refresh:
+      duration: 2592000000
+  velocity:
+    templates:
+      location: /templates/
 ---
 spring:
   profiles: integration-test
@@ -27,7 +38,7 @@ spring:
   profiles: local-dev
   datasource:
     # User has to have GRANT CREATE EXTENSION for script execution
-    url: jdbc:postgresql://192.168.99.100:1717/bbl
+    url: jdbc:postgresql://localhost:1717/bbl
     username: bbl
     password: bbl
   flyway:

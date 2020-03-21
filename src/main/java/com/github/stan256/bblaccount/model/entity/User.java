@@ -1,4 +1,4 @@
-package com.github.stan256.bblaccount.model;
+package com.github.stan256.bblaccount.model.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -6,20 +6,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.List;
 import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "users")
 @NoArgsConstructor
-public class User extends DateAudit{
+public class User extends DateAudit {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id")
   @SequenceGenerator(name = "user_id", sequenceName = "users_id_seq", initialValue = 0, allocationSize = 1)
   private long id;
 
-  @Column(nullable = false)
+  @Column
   @Size(max = 30)
   @NotBlank
   private String firstName;
@@ -36,7 +35,7 @@ public class User extends DateAudit{
   private String email;
 
   @Column(nullable = false)
-  @Size(max = 40)
+  @Size(max = 60)
   @NotBlank
   private String password;
 
@@ -46,7 +45,7 @@ public class User extends DateAudit{
   private int age;
 
   @Column(nullable = false)
-  private Boolean isEmailVerified;
+  private Boolean emailVerified;
 
   @Column(nullable = false)
   private Boolean active;
@@ -55,6 +54,6 @@ public class User extends DateAudit{
   @JoinTable(name = "user_roles",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private List<UserRole> roles;
+  private Set<Role> roles;
 }
 

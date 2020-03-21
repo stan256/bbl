@@ -1,0 +1,13 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: boobl.trips@gmail.com
+    password: bydtcnbhjdfybt1994
+    port: 587
+    protocol: smtp
+    debug: true
+    smtp:
+      auth: true
+      starttls:
+        enable: true

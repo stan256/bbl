@@ -1,6 +1,9 @@
 package com.github.stan256.bblaccount.service;
 
 
+import com.github.stan256.bblaccount.model.*;
+import com.github.stan256.bblaccount.model.entity.*;
+import com.github.stan256.bblaccount.model.payload.*;
 import com.github.stan256.bblaccount.security.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,92 +39,55 @@ public class AuthService {
         this.passwordResetTokenService = passwordResetTokenService;
     }
 
-    /**
-     * Registers a new user in the database by performing a series of quick checks.
-     *
-     * @return A user object if successfully created
-     */
     public Optional<User> registerUser(RegistrationRequest newRegistrationRequest) {
         String newRegistrationRequestEmail = newRegistrationRequest.getEmail();
         if (emailAlreadyExists(newRegistrationRequestEmail)) {
-            logger.error("Email already exists: " + newRegistrationRequestEmail);
-            throw new ResourceAlreadyInUseException("Email", "Address", newRegistrationRequestEmail);
+            log.error("Email already exists: " + newRegistrationRequestEmail);
+            throw new RuntimeException("Email already exists: " + newRegistrationRequestEmail);
         }
-        logger.info("Trying to register new user [" + newRegistrationRequestEmail + "]");
+        log.info("Trying to register new user [" + newRegistrationRequestEmail + "]");
         User newUser = userService.createUser(newRegistrationRequest);
         User registeredNewUser = userService.save(newUser);
-        return Optional.ofNullable(registeredNewUser);
+        return Optional.of(registeredNewUser);
     }
 
-    /**
-     * Checks if the given email already exists in the database repository or not
-     *
-     * @return true if the email exists else false
-     */
     public Boolean emailAlreadyExists(String email) {
         return userService.existsByEmail(email);
     }
 
-    /**
-     * Checks if the given email already exists in the database repository or not
-     *
-     * @return true if the email exists else false
-     */
-    public Boolean usernameAlreadyExists(String username) {
-        return userService.existsByUsername(username);
-    }
-
-    /**
-     * Authenticate user and log them in given a loginRequest
-     */
     public Optional<Authentication> authenticateUser(LoginRequest loginRequest) {
-        return Optional.ofNullable(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
-                loginRequest.getPassword())));
+        return Optional.of(authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())));
     }
 
-    /**
-     * Confirms the user verification based on the token expiry and mark the user as active.
-     * If user is already verified, save the unnecessary database calls.
-     */
     public Optional<User> confirmEmailRegistration(String emailToken) {
         EmailVerificationToken emailVerificationToken = emailVerificationTokenService.findByToken(emailToken)
-                .orElseThrow(() -> new ResourceNotFoundException("Token", "Email verification", emailToken));
+                .orElseThrow(() -> new RuntimeException("Email token not found: " + emailToken));
 
         User registeredUser = emailVerificationToken.getUser();
         if (registeredUser.getEmailVerified()) {
-            logger.info("User [" + emailToken + "] already registered.");
+            log.info("User [" + emailToken + "] already registered.");
             return Optional.of(registeredUser);
         }
 
         emailVerificationTokenService.verifyExpiration(emailVerificationToken);
-        emailVerificationToken.setConfirmedStatus();
+        emailVerificationToken.setTokenStatus(TokenStatus.CONFIRMED);
         emailVerificationTokenService.save(emailVerificationToken);
 
-        registeredUser.markVerificationConfirmed();
+        registeredUser.setEmailVerified(true);
         userService.save(registeredUser);
         return Optional.of(registeredUser);
     }
 
-    /**
-     * Attempt to regenerate a new email verification token given a valid
-     * previous expired token. If the previous token is valid, increase its expiry
-     * else update the token value and add a new expiration.
-     */
     public Optional<EmailVerificationToken> recreateRegistrationToken(String existingToken) {
         EmailVerificationToken emailVerificationToken = emailVerificationTokenService.findByToken(existingToken)
-                .orElseThrow(() -> new ResourceNotFoundException("Token", "Existing email verification", existingToken));
+                .orElseThrow(() -> new RuntimeException("Email verification token does not exist. Token: " + existingToken));
 
         if (emailVerificationToken.getUser().getEmailVerified()) {
             return Optional.empty();
         }
-        return Optional.ofNullable(emailVerificationTokenService.updateExistingTokenWithNameAndExpiry(emailVerificationToken));
-    }
 
-    /**
-     * Validates the password of the current logged in user with the given password
-     */
-    private Boolean currentPasswordMatches(User currentUser, String password) {
-        return passwordEncoder.matches(password, currentUser.getPassword());
+        return Optional.of(emailVerificationTokenService.updateExistingTokenWithNameAndExpiry(emailVerificationToken));
     }
 
     /**
@@ -131,33 +97,29 @@ public class AuthService {
                                          UpdatePasswordRequest updatePasswordRequest) {
         String email = customUserDetails.getEmail();
         User currentUser = userService.findByEmail(email)
-                .orElseThrow(() -> new UpdatePasswordException(email, "No matching user found"));
+                .orElseThrow(() -> new RuntimeException("No matching user found: " + email));
 
-        if (!currentPasswordMatches(currentUser, updatePasswordRequest.getOldPassword())) {
-            logger.info("Current password is invalid for [" + currentUser.getPassword() + "]");
-            throw new UpdatePasswordException(currentUser.getEmail(), "Invalid current password");
+        if (!passwordEncoder.matches(currentUser.getPassword(), updatePasswordRequest.getOldPassword())) {
+            log.info("Current password is invalid for [" + currentUser.getPassword() + "]");
+            throw new RuntimeException("Invalid current password: " + currentUser.getEmail());
         }
+
         String newPassword = passwordEncoder.encode(updatePasswordRequest.getNewPassword());
         currentUser.setPassword(newPassword);
         userService.save(currentUser);
         return Optional.of(currentUser);
     }
 
-    /**
-     * Generates a JWT token for the validated client
-     */
     public String generateToken(CustomUserDetails customUserDetails) {
         return tokenProvider.generateToken(customUserDetails);
     }
 
-    /**
-     * Generates a JWT token for the validated client by userId
-     */
     private String generateTokenFromUserId(Long userId) {
         return tokenProvider.generateTokenFromUserId(userId);
     }
 
     /**
+     * todo
      * Creates and persists the refresh token for the user device. If device exists
      * already, we don't care. Unused devices with expired tokens should be cleaned
      * with a cron job. The generated token would be encapsulated within the jwt.
@@ -165,28 +127,20 @@ public class AuthService {
      */
     public Optional<RefreshToken> createAndPersistRefreshTokenForDevice(Authentication authentication, LoginRequest loginRequest) {
         User currentUser = (User) authentication.getPrincipal();
-        //if successful login -> remove old refresh token
         userDeviceService.findByUserId(currentUser.getId())
                 .map(UserDevice::getRefreshToken)
                 .map(RefreshToken::getId)
                 .ifPresent(refreshTokenService::deleteById);
 
-        //Save new refreshToken
         UserDevice userDevice = userDeviceService.createUserDevice(loginRequest.getDeviceInfo());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken();
         userDevice.setUser(currentUser);
         userDevice.setRefreshToken(refreshToken);
         refreshToken.setUserDevice(userDevice);
         refreshToken = refreshTokenService.save(refreshToken);
-        return Optional.ofNullable(refreshToken);
+        return Optional.of(refreshToken);
     }
 
-    /**
-     * Refresh the expired jwt token using a refresh token and device info. The
-     * * refresh token is mapped to a specific device and if it is unexpired, can help
-     * * generate a new jwt. If the refresh token is inactive for a device or it is expired,
-     * * throw appropriate errors.
-     */
     public Optional<String> refreshJwtToken(TokenRefreshRequest tokenRefreshRequest) {
         String requestRefreshToken = tokenRefreshRequest.getRefreshToken();
 
@@ -200,12 +154,9 @@ public class AuthService {
                 .map(RefreshToken::getUserDevice)
                 .map(UserDevice::getUser)
                 .map(User::getId).map(this::generateTokenFromUserId))
-                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "Missing refresh token in database.Please login again"));
+                .orElseThrow(() -> new RuntimeException("Missing refresh token in database.Please login again. Token: " + requestRefreshToken));
     }
 
-    /**
-     * Generates a password reset token from the given reset request
-     */
     public Optional<PasswordResetToken> generatePasswordResetToken(PasswordResetLinkRequest passwordResetLinkRequest) {
         String email = passwordResetLinkRequest.getEmail();
         return userService.findByEmail(email)
@@ -215,16 +166,13 @@ public class AuthService {
                     passwordResetTokenService.save(passwordResetToken);
                     return Optional.of(passwordResetToken);
                 })
-                .orElseThrow(() -> new PasswordResetLinkException(email, "No matching user found for the given request"));
+                .orElseThrow(() -> new RuntimeException("No matching user found for the given request. Email: " + email));
     }
 
-    /**
-     * Reset a password given a reset request and return the updated user
-     */
     public Optional<User> resetPassword(PasswordResetRequest passwordResetRequest) {
         String token = passwordResetRequest.getToken();
         PasswordResetToken passwordResetToken = passwordResetTokenService.findByToken(token)
-                .orElseThrow(() -> new ResourceNotFoundException("Password Reset Token", "Token Id", token));
+                .orElseThrow(() -> new RuntimeException("Token does not exist: " + token));
 
         passwordResetTokenService.verifyExpiration(passwordResetToken);
         final String encodedPassword = passwordEncoder.encode(passwordResetRequest.getPassword());
