@@ -14,7 +14,7 @@ import java.time.Instant;
 public class PasswordResetToken {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pwd_reset_token_id")
-    @SequenceGenerator(name = "pwd_reset_token_id", sequenceName = "pwd_reset_token_seq", initialValue = 0, allocationSize = 1)
+    @SequenceGenerator(name = "pwd_reset_token_id", sequenceName = "pwd_reset_token_seq", initialValue = 200, allocationSize = 1)
     private Long id;
 
     @NaturalId

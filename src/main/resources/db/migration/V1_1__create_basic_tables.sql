@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS user_device
 CREATE TABLE IF NOT EXISTS roles
 (
     id         bigserial primary key,
-    role       varchar(12) NOT NULL,
+    role       varchar(12) NOT NULL ,
     created_at TIMESTAMP   NOT NULL DEFAULT now(),
     updated_at TIMESTAMP   NOT NULL DEFAULT now()
 );
@@ -67,12 +67,12 @@ CREATE TABLE IF NOT EXISTS user_roles
 (
     user_id bigint REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
     role_id bigint REFERENCES roles (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT user_product_pkey PRIMARY KEY (user_id, role_id)
+    CONSTRAINT user_role_pkey PRIMARY KEY (user_id, role_id)
 );
 
 CREATE TABLE IF NOT EXISTS refresh_token_user_devices
 (
     refresh_token_id bigint REFERENCES refresh_token (id) ON UPDATE CASCADE ON DELETE CASCADE,
     user_device_id   bigint REFERENCES user_device (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT user_product_pkey PRIMARY KEY (refresh_token_id, user_device_id)
+    CONSTRAINT refresh_token_user_device_pkey PRIMARY KEY (refresh_token_id, user_device_id)
 );

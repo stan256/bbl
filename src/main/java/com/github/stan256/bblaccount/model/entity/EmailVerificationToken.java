@@ -17,7 +17,7 @@ import java.time.Instant;
 public class EmailVerificationToken extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "email_token_id")
-    @SequenceGenerator(name = "email_token_id", sequenceName = "email_token_seq", initialValue = 0, allocationSize = 1)
+    @SequenceGenerator(name = "email_token_id", sequenceName = "email_token_seq", initialValue = 200, allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)

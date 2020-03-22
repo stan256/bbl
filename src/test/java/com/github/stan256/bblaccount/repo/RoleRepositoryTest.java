@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class RoleRepositoryTest extends BaseRepositoryTest {
@@ -19,9 +20,8 @@ class RoleRepositoryTest extends BaseRepositoryTest {
 
     @Test
     public void exactAmount(){
-        List<Role> all = roleRepository.findAll();
-        assertEquals(
-                all.stream().map(Role::getRole).collect(Collectors.toList()),
-                Arrays.asList(RoleName.ADMIN, RoleName.MODERATOR, RoleName.USER));
+        List<RoleName> db = roleRepository.findAll().stream().map(Role::getRole).collect(Collectors.toList());
+        List<RoleName> roleNames = Arrays.asList(RoleName.values());
+        assertTrue(db.size() == roleNames.size() && db.containsAll(roleNames) && roleNames.containsAll(db));
     }
 }
