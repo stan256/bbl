@@ -17,7 +17,7 @@ public class UserHelper {
         stas.setFirstName("Stanislav");
         stas.setLastName("Studzinskyi");
         stas.setEmail("test@email.com");
-        stas.setPassword("s");
+        stas.setPassword("1234test");
         stas.setAge(25);
         stas.setEmailVerified(false);
         stas.setActive(true);

@@ -1,5 +1,6 @@
 package com.github.stan256.bblaccount.model.entity;
 
+import com.github.stan256.bblaccount.annotation.ValidPassword;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Set;
 public class User extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id")
-    @SequenceGenerator(name = "user_id", sequenceName = "users_id_seq", initialValue = 200, allocationSize = 1)
+    @SequenceGenerator(name = "user_id", sequenceName = "users_id_seq", initialValue = 0, allocationSize = 1)
     private long id;
 
     @Column
@@ -35,8 +36,9 @@ public class User extends DateAudit {
     private String email;
 
     @Column(nullable = false)
-    @Size(max = 60)
+    @Size(min = 6, max = 60)
     @NotBlank
+    @ValidPassword
     private String password;
 
     @Column(nullable = false)
