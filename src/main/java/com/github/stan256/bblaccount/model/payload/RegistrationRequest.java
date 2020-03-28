@@ -13,14 +13,8 @@ import javax.validation.constraints.NotNull;
 public class RegistrationRequest {
 
     @NullOrNotBlank
-    private String username;
-
-    @NullOrNotBlank
     private String email;
 
     @NotNull
     private String password;
-
-    @NotNull
-    private Boolean registerAsAdmin;
 }

@@ -15,9 +15,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class LoginRequest {
     @NotBlank
-    private String username;
-
-    @NotBlank
     private String email;
 
     @NotNull
@@ -26,5 +23,4 @@ public class LoginRequest {
     @Valid
     @NotNull
     private DeviceInfo deviceInfo;
-
 }

@@ -8,15 +8,17 @@ import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 
 @Slf4j
 @Component
-public class OnUserRegistrationCompleteListener implements ApplicationListener<OnUserRegistrationCompleteEvent> {
+public class OnUserRegistrationCompleteListener {
 
     private final EmailVerificationTokenService emailVerificationTokenService;
     private final MailService mailService;
@@ -27,14 +29,14 @@ public class OnUserRegistrationCompleteListener implements ApplicationListener<O
         this.mailService = mailService;
     }
 
-    @Override
-    @Async
+    @EventListener
     public void onApplicationEvent(OnUserRegistrationCompleteEvent onUserRegistrationCompleteEvent) {
         sendEmailVerification(onUserRegistrationCompleteEvent);
     }
 
     private void sendEmailVerification(OnUserRegistrationCompleteEvent event) {
         User user = event.getUser();
+        log.info("Sending an email for user: " + user);
         String token = emailVerificationTokenService.generateNewToken();
         emailVerificationTokenService.createVerificationToken(user, token);
 
@@ -44,8 +46,7 @@ public class OnUserRegistrationCompleteListener implements ApplicationListener<O
         try {
             mailService.sendEmailVerification(emailConfirmationUrl, recipientAddress);
         } catch (IOException | TemplateException | MessagingException e) {
-            log.error(e.toString());
-            throw new RuntimeException("Email Verification: " + recipientAddress);
+            throw new RuntimeException("Email Verification: " + recipientAddress, e);
         }
     }
 }

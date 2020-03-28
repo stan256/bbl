@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.stan256</groupId>
-    <artifactId>bbl-account</artifactId>
+    <artifactId>bbl</artifactId>
     <version>0.0.1</version>
     <name>bbl-account</name>
     <description>Demo project for Spring Boot</description>

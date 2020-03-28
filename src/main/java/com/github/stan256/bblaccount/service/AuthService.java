@@ -126,7 +126,7 @@ public class AuthService {
      * Remove the existing refresh token as the old one should not remain valid.
      */
     public Optional<RefreshToken> createAndPersistRefreshTokenForDevice(Authentication authentication, LoginRequest loginRequest) {
-        User currentUser = (User) authentication.getPrincipal();
+        User currentUser = ((CustomUserDetails) authentication.getPrincipal()).getUser();
         userDeviceService.findByUserId(currentUser.getId())
                 .map(UserDevice::getRefreshToken)
                 .map(RefreshToken::getId)

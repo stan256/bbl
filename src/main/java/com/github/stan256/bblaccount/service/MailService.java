@@ -4,6 +4,7 @@ import com.github.stan256.bblaccount.model.Mail;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class MailService {
 
@@ -55,15 +57,14 @@ public class MailService {
     }
 
     public void sendResetLink(String resetPasswordLink, String to) throws IOException, TemplateException, MessagingException {
-        Long expirationInMinutes = TimeUnit.MILLISECONDS.toMinutes(expiration);
-        String expirationInMinutesString = expirationInMinutes.toString();
+        long expirationInMinutes = TimeUnit.MILLISECONDS.toMinutes(expiration);
         Mail mail = new Mail();
         mail.setSubject("Password Reset Link [Team CEP]");
         mail.setTo(to);
         mail.setFrom(mailFrom);
         mail.getModel().put("userName", to);
         mail.getModel().put("userResetPasswordLink", resetPasswordLink);
-        mail.getModel().put("expirationTime", expirationInMinutesString);
+        mail.getModel().put("expirationTime", Long.toString(expirationInMinutes));
 
         templateConfiguration.setClassForTemplateLoading(getClass(), basePackagePath);
         Template template = templateConfiguration.getTemplate("reset-link.ftl");

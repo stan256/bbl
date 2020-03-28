@@ -15,7 +15,7 @@ import java.time.Instant;
 public class RefreshToken extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "refresh_token_id")
-    @SequenceGenerator(name = "refresh_token_id", sequenceName = "refresh_token_seq", initialValue = 200, allocationSize = 1)
+    @SequenceGenerator(name = "refresh_token_id", sequenceName = "refresh_token_id_seq", initialValue = 200, allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)

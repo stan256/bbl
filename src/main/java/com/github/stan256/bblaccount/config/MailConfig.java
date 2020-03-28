@@ -1,7 +1,5 @@
 package com.github.stan256.bblaccount.config;
 
-import com.github.stan256.bblaccount.propertySource.YamlPropertySourceFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +13,7 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import java.util.Properties;
 
 @Configuration
-@PropertySource(factory = YamlPropertySourceFactory.class, value = "classpath:mail.yml")
+@PropertySource("classpath:mail.properties")
 @EnableAsync
 public class MailConfig {
 

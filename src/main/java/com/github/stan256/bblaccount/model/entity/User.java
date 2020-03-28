@@ -1,5 +1,6 @@
 package com.github.stan256.bblaccount.model.entity;
 
+import com.github.stan256.bblaccount.annotation.Age;
 import com.github.stan256.bblaccount.annotation.ValidPassword;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,12 +22,10 @@ public class User extends DateAudit {
 
     @Column
     @Size(max = 30)
-    @NotBlank
     private String firstName;
 
     @Column
     @Size(max = 30)
-    @NotBlank
     private String lastName;
 
     @Column(nullable = false, unique = true)
@@ -42,9 +41,8 @@ public class User extends DateAudit {
     private String password;
 
     @Column(nullable = false)
-    @Max(150)
-    @Min(1)
-    private int age;
+    @Age
+    private Integer age;
 
     @Column(nullable = false)
     private Boolean emailVerified;

@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class UserDevice extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_device_id")
-    @SequenceGenerator(name = "user_device_id", sequenceName = "user_device_seq", initialValue = 200, allocationSize = 1)
+    @SequenceGenerator(name = "user_device_id", sequenceName = "user_device_id_seq", initialValue = 200, allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

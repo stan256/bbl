@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -57,23 +58,13 @@ public class UserService {
 
     public User createUser(RegistrationRequest registerRequest) {
         User newUser = new User();
-        Boolean isNewUserAsAdmin = registerRequest.getRegisterAsAdmin();
         newUser.setEmail(registerRequest.getEmail());
         newUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         newUser.setEmail(registerRequest.getEmail());
-        newUser.setRoles(getRolesForNewUser(isNewUserAsAdmin));
+        newUser.setRoles(new HashSet<>(Arrays.asList(roleService.findUserRole().orElseThrow())));
         newUser.setActive(true);
         newUser.setEmailVerified(false);
         return newUser;
-    }
-
-    private Set<Role> getRolesForNewUser(Boolean isToBeMadeAdmin) {
-        Set<Role> newUserRoles = new HashSet<>(roleService.findAll());
-        if (!isToBeMadeAdmin) {
-            newUserRoles.removeIf(Role::isAdminRole);
-        }
-        log.info("Setting user roles: " + newUserRoles);
-        return newUserRoles;
     }
 
     public void logoutUser(@AuthenticationPrincipal CustomUserDetails currentUser, LogoutRequest logOutRequest) {
