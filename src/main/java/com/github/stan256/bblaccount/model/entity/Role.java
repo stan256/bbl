@@ -12,9 +12,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Entity(name = "roles")
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor
+@Entity(name = "roles")
 public class Role extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id")

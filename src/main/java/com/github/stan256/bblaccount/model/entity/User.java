@@ -11,9 +11,9 @@ import javax.validation.constraints.*;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Entity(name = "users")
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor
+@Entity(name = "users")
 public class User extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id")

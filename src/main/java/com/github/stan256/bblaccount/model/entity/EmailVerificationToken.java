@@ -11,7 +11,7 @@ import javax.validation.constraints.Future;
 import java.time.Instant;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor
 @Entity(name = "email_verification_token")
 public class EmailVerificationToken extends DateAudit {

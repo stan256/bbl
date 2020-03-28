@@ -3,11 +3,13 @@ package com.github.stan256.bblaccount.model.entity;
 import com.github.stan256.bblaccount.model.DeviceType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
+@NoArgsConstructor
 @Entity(name = "user_device")
 public class UserDevice extends DateAudit {
     @Id

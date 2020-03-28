@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Data
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Entity(name = "refresh_token")
 public class RefreshToken extends DateAudit {
     @Id
