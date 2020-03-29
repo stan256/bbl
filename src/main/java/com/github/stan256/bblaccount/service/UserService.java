@@ -69,11 +69,9 @@ public class UserService {
 
     public void logoutUser(@AuthenticationPrincipal CustomUserDetails currentUser, LogoutRequest logOutRequest) {
         String deviceId = logOutRequest.getDeviceInfo().getDeviceId();
-        UserDevice userDevice = userDeviceService.findByUserId(currentUser.getId())
+        userDeviceService.findAllByUserId(currentUser.getId())
+                .stream()
                 .filter(device -> device.getDeviceId().equals(deviceId))
-                .orElseThrow(() -> new RuntimeException("Invalid device Id supplied. No matching device found for the given user. Device id: " + logOutRequest.getDeviceInfo().getDeviceId()));
-
-        log.info("Removing refresh token associated with device [" + userDevice + "]");
-        refreshTokenService.deleteById(userDevice.getRefreshToken().getId());
+                .forEach(userDevice -> refreshTokenService.deleteById(userDevice.getRefreshToken().getId()));
     }
 }

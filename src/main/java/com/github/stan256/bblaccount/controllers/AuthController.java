@@ -40,13 +40,14 @@ public class AuthController {
 
     @GetMapping("/checkEmailInUse")
     public ResponseEntity checkEmailInUse(@RequestParam("email") String email) {
-        log.info("hit");
+
         Boolean emailExists = authService.emailAlreadyExists(email);
         return ResponseEntity.ok(new ApiResponse(emailExists.toString(), true));
     }
 
     @PostMapping("/login")
     public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
         Authentication authentication = authService.authenticateUser(loginRequest)
                 .orElseThrow(() -> new RuntimeException("Couldn't login user [" + loginRequest + "]"));
 

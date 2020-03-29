@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users
     last_name      varchar(40),
     email          varchar(50) NOT NULL,
     password       varchar(60) NOT NULL,
-    age            int         not null,
+    age            int,
     email_verified BOOLEAN     not null DEFAULT false,
     active         BOOLEAN     not null DEFAULT true,
     created_at     TIMESTAMP   NOT NULL DEFAULT now(),
@@ -15,13 +15,11 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS user_device
 (
     id                 bigserial primary key,
-    user_id            bigint      NOT NULL,
+    user_id            bigint      NOT NULL REFERENCES users(id),
     device_type        varchar(15) NOT NULL,
-    notification_token varchar(40) NOT NULL,
+    notification_token varchar(40),
     device_id          varchar(40) NOT NULL,
-    refresh_token_id   bigint      not null,
     refresh_active     boolean     not null,
-    active             BOOLEAN     not null DEFAULT true,
     created_at         TIMESTAMP   NOT NULL DEFAULT now(),
     updated_at         TIMESTAMP   NOT NULL DEFAULT now()
 );
@@ -49,6 +47,7 @@ CREATE TABLE IF NOT EXISTS refresh_token
 (
     id              bigserial primary key,
     token           VARCHAR(40) NOT NULL,
+    user_device_id  BIGINT      NOT NULL REFERENCES user_device(id),
     refresh_count   BIGINT      NOT NULL,
     expiration_date TIMESTAMP   not null,
     created_at      TIMESTAMP   NOT NULL DEFAULT now(),

@@ -23,7 +23,7 @@ public class RefreshToken extends DateAudit {
     private String token;
 
     @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(unique = true)
+    @JoinColumn(name = "user_device_id", unique = true)
     private UserDevice userDevice;
 
     @Column

@@ -13,14 +13,14 @@ public class UserHelper {
     private RoleRepository roleRepository;
 
     public User buildTestUser() {
-        User stas = new User();
-        stas.setFirstName("Stanislav");
-        stas.setLastName("Studzinskyi");
-        stas.setEmail("test@email.com");
-        stas.setPassword("1234test");
-        stas.setAge(25);
-        stas.setEmailVerified(false);
-        stas.setActive(true);
-        return stas;
+        User user = new User();
+        user.setFirstName("Stanislav");
+        user.setLastName("Studzinskyi");
+        user.setEmail("test@email.com");
+        user.setPassword("1234test");
+        user.setAge(25);
+        user.setEmailVerified(false);
+        user.setActive(true);
+        return user;
     }
 }

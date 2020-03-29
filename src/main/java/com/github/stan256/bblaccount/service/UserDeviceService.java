@@ -7,6 +7,7 @@ import com.github.stan256.bblaccount.repo.UserDeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,8 +20,8 @@ public class UserDeviceService {
         this.userDeviceRepository = userDeviceRepository;
     }
 
-    public Optional<UserDevice> findByUserId(Long userId) {
-        return userDeviceRepository.findByUserId(userId);
+    public List<UserDevice> findAllByUserId(Long userId) {
+        return userDeviceRepository.findAllByUserId(userId);
     }
 
     public Optional<UserDevice> findByRefreshToken(RefreshToken refreshToken) {
