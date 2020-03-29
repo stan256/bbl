@@ -31,6 +31,6 @@ public class Role extends DateAudit {
     }
 
     public boolean isAdminRole() {
-        return this.role.equals(RoleName.ADMIN);
+        return this.role.equals(RoleName.ROLE_ADMIN);
     }
 }

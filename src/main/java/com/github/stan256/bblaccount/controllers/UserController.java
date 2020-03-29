@@ -37,10 +37,10 @@ public class UserController {
 
     // todo to check authprincipal
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity getUserProfile(@AuthenticationPrincipal CustomUserDetails currentUser) {
         log.info(currentUser.getEmail() + " has role: " + currentUser.getRoles());
-        return ResponseEntity.ok("Hello. This is about me");
+        return ResponseEntity.ok(currentUser);
     }
 
     @GetMapping("/admins")
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/password/update")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity updateUserPassword(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                              @Valid @RequestBody UpdatePasswordRequest updatePasswordRequest) {
         return authService.updatePassword(customUserDetails, updatePasswordRequest)

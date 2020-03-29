@@ -25,6 +25,6 @@ public class RoleService {
     }
 
     public Optional<Role> findUserRole() {
-        return roleRepository.findByRole(RoleName.USER);
+        return roleRepository.findByRole(RoleName.ROLE_USER);
     }
 }

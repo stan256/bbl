@@ -110,12 +110,12 @@ public class AuthService {
         return Optional.of(currentUser);
     }
 
-    public String generateToken(CustomUserDetails customUserDetails) {
-        return tokenProvider.generateToken(customUserDetails);
+    public String generateAccessToken(CustomUserDetails customUserDetails) {
+        return tokenProvider.generateAccessToken(customUserDetails);
     }
 
     private String generateTokenFromUserId(Long userId) {
-        return tokenProvider.generateTokenFromUserId(userId);
+        return tokenProvider.generateAccessTokenFromUserId(userId);
     }
 
     public Optional<RefreshToken> createAndPersistRefreshTokenForDevice(Authentication authentication, LoginRequest loginRequest) {

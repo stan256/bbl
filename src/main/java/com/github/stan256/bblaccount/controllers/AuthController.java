@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -57,8 +56,8 @@ public class AuthController {
         return authService.createAndPersistRefreshTokenForDevice(authentication, loginRequest)
                 .map(RefreshToken::getToken)
                 .map(refreshToken -> {
-                    String jwtToken = authService.generateToken(customUserDetails);
-                    return ResponseEntity.ok(new JwtAuthenticationResponse(jwtToken, refreshToken, tokenProvider.getExpiryDuration()));
+                    String accessToken = authService.generateAccessToken(customUserDetails);
+                    return ResponseEntity.ok(new JwtAuthenticationResponse(accessToken, refreshToken, tokenProvider.getExpiryDuration()));
                 })
                 .orElseThrow(() -> new RuntimeException("Couldn't create refresh token for: [" + loginRequest + "]"));
     }

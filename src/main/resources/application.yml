@@ -14,9 +14,7 @@ spring:
 app:
   jwt:
     secret: test@secret
-    expiration: 86400000
-    header: Authorization
-    prefix: Bearer
+    expiration: 86400000 
   token:
     email:
       verification:

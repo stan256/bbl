@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS user_device
 CREATE TABLE IF NOT EXISTS roles
 (
     id         bigserial primary key,
-    role       varchar(12) NOT NULL,
+    role       varchar(20) NOT NULL,
     created_at TIMESTAMP   NOT NULL DEFAULT now(),
     updated_at TIMESTAMP   NOT NULL DEFAULT now()
 );

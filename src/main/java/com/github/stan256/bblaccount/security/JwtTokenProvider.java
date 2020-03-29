@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -19,14 +20,15 @@ public class JwtTokenProvider {
     @Value("${app.jwt.expiration}")
     private Long jwtExpirationInMs;
 
-    public String generateToken(CustomUserDetails customUserDetails) {
-        return generateTokenFromUserId(customUserDetails.getId());
+    public String generateAccessToken(CustomUserDetails customUserDetails) {
+        return generateAccessTokenFromUserId(customUserDetails.getId());
     }
 
-    public String generateTokenFromUserId(Long userId) {
+    public String generateAccessTokenFromUserId(Long userId) {
         Instant expiryDate = Instant.now().plusMillis(jwtExpirationInMs);
         return Jwts.builder()
                 .setSubject(Long.toString(userId))
+                .setHeader((Map<String, Object>) Jwts.header().setType("JWT"))
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(expiryDate))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
