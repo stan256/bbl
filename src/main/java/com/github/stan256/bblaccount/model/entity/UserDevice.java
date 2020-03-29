@@ -18,7 +18,7 @@ public class UserDevice extends DateAudit {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name = "device_type")
@@ -34,6 +34,6 @@ public class UserDevice extends DateAudit {
     @OneToOne(optional = false, mappedBy = "userDevice")
     private RefreshToken refreshToken;
 
-    @Column(name = "is_refresh_active")
+    @Column(name = "refresh_active")
     private Boolean refreshActive;
 }

@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS user_device
 (
     id                 bigserial primary key,
-    user_id            varchar(40) NOT NULL,
+    user_id            bigint      NOT NULL,
     device_type        varchar(15) NOT NULL,
     notification_token varchar(40) NOT NULL,
     device_id          varchar(40) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS user_device
 CREATE TABLE IF NOT EXISTS roles
 (
     id         bigserial primary key,
-    role       varchar(12) NOT NULL ,
+    role       varchar(12) NOT NULL,
     created_at TIMESTAMP   NOT NULL DEFAULT now(),
     updated_at TIMESTAMP   NOT NULL DEFAULT now()
 );
