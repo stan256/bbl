@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: bbldb
+    ports:
+      - 1717:5432
+    environment:
+      - POSTGRES_PASSWORD=bbl
+      - POSTGRES_USER=bbl
+      - POSTGRES_DB=bbl
+
+  bbl:
+    image: junkwin/bbl:latest
+    container_name: bbl
+    build: .
+    ports:
+      - 8082:8080
+    links:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: dev

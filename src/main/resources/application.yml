@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local-dev
+    active: dev
   datasource:
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -35,10 +35,10 @@ spring:
 
 ---
 spring:
-  profiles: local-dev
+  profiles: dev
   datasource:
     # User has to have GRANT CREATE EXTENSION for script execution
-    url: jdbc:postgresql://localhost:1717/bbl
+    url: jdbc:postgresql://bbldb/bbl
     username: bbl
     password: bbl
   flyway:
