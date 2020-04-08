@@ -2,6 +2,7 @@ package com.github.stan256.bblaccount.model.entity;
 
 import com.github.stan256.bblaccount.annotation.Age;
 import com.github.stan256.bblaccount.annotation.ValidPassword;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor
+@Builder
 @Entity(name = "users")
 public class User extends DateAudit {
     @Id

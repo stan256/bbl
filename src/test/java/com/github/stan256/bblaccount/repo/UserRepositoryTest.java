@@ -2,7 +2,7 @@ package com.github.stan256.bblaccount.repo;
 
 import com.github.stan256.bblaccount.model.entity.User;
 import com.github.stan256.bblaccount.sql.BaseRepositoryTest;
-import com.github.stan256.bblaccount.util.UserHelper;
+import com.github.stan256.bblaccount.helpers.UserHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionSystemException;
@@ -12,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 class UserRepositoryTest extends BaseRepositoryTest {
-    @Autowired
-    private UserHelper userHelper;
 
     @Autowired
     private UserRepository userRepository;
@@ -23,8 +21,8 @@ class UserRepositoryTest extends BaseRepositoryTest {
 
     @Test
     public void addAndDeleteUsers() {
-        User user1 = userRepository.save(userHelper.buildTestUser());
-        User user2 = userRepository.save(userHelper.buildTestUser());
+        User user1 = userRepository.save(UserHelper.buildTestUser());
+        User user2 = userRepository.save(UserHelper.buildTestUser());
 
         assertEquals(2, userRepository.findAll().size());
         assertEquals(3, roleRepository.findAll().size());
@@ -42,7 +40,7 @@ class UserRepositoryTest extends BaseRepositoryTest {
 
     @Test
     public void shouldThrowValidationExceptionOnIncorrectEmail() {
-        User user = userHelper.buildTestUser();
+        User user = UserHelper.buildTestUser();
         user.setEmail("incorrect");
         assertThrows(TransactionSystemException.class, () -> userRepository.save(user));
         user.setEmail("good@email.com");
