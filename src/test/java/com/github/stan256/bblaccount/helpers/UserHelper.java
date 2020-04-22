@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 public class UserHelper {
+    public static final String TEST_EMAIL = "test@email.com";
+    public static final String TEST_PASSWORD = "123456supersecret";
+
     public static User buildTestUser() {
         User user = new User();
         user.setFirstName("Stanislav");
         user.setLastName("Studzinskyi");
-        user.setEmail("test@email.com");
-        user.setPassword("1234test");
+        user.setEmail(TEST_EMAIL);
+        user.setPassword(TEST_PASSWORD);
         user.setAge(25);
         user.setEmailVerified(false);
         user.setActive(true);

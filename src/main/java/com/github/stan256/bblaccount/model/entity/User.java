@@ -14,7 +14,6 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor
-@Builder
 @Entity(name = "users")
 public class User extends DateAudit {
     @Id

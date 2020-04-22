@@ -15,7 +15,7 @@ public class AgeConstraintValidator implements ConstraintValidator<Age, Integer>
             return true;
 
         try {
-            return value > 0 && value < 150;
+            return value > 0 && value < 110;
         } catch (ClassCastException e){
             return false;
         }

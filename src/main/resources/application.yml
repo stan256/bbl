@@ -38,7 +38,7 @@ spring:
   profiles: dev
   datasource:
     # User has to have GRANT CREATE EXTENSION for script execution
-    url: jdbc:postgresql://localhost:1717/bbl
+    url: jdbc:postgresql://192.168.99.100:1717/bbl
     username: bbl
     password: bbl
   flyway:
