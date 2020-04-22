@@ -80,19 +80,16 @@ public class AuthService {
     }
 
     public Optional<EmailVerificationToken> recreateRegistrationToken(String existingToken) {
-        EmailVerificationToken emailVerificationToken = emailVerificationTokenService.findByToken(existingToken)
+        EmailVerificationToken evt = emailVerificationTokenService.findByToken(existingToken)
                 .orElseThrow(() -> new RuntimeException("Email verification token does not exist. Token: " + existingToken));
 
-        if (emailVerificationToken.getUser().getEmailVerified()) {
+        if (evt.getUser().getEmailVerified() || evt.getTokenStatus() == TokenStatus.CONFIRMED) {
             return Optional.empty();
         }
 
-        return Optional.of(emailVerificationTokenService.updateExistingTokenWithNameAndExpiry(emailVerificationToken));
+        return Optional.of(emailVerificationTokenService.updateExistingTokenWithNameAndExpiry(evt));
     }
 
-    /**
-     * Updates the password of the current logged in user
-     */
     public Optional<User> updatePassword(CustomUserDetails customUserDetails,
                                          UpdatePasswordRequest updatePasswordRequest) {
         String email = customUserDetails.getEmail();
