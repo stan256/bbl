@@ -19,7 +19,7 @@ public class User extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id")
     @SequenceGenerator(name = "user_id", sequenceName = "users_id_seq", initialValue = 0, allocationSize = 1)
-    private long id;
+    private Long id;
 
     @Column
     @Size(max = 30)

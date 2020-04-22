@@ -70,7 +70,7 @@ public class AuthServiceTest {
         User testUserWithId = new User();
         testUserWithId.setEmail(rr.getEmail());
         testUserWithId.setPassword(rr.getPassword());
-        testUserWithId.setId(1);
+        testUserWithId.setId(1L);
 
         when(userService.existsByEmail(rr.getEmail())).thenReturn(false);
         when(userService.createUser(rr)).thenReturn(testUser);

@@ -26,7 +26,7 @@ public class CustomUserDetails implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    public long getId(){
+    public Long getId(){
         return user.getId();
     }
 

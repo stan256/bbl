@@ -19,7 +19,7 @@ public class Role extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id")
     @SequenceGenerator(name = "role_id", sequenceName = "roles_id_seq", initialValue = 200, allocationSize = 1)
-    private long id;
+    private Long id;
 
     @Column(unique = true)
     @NaturalId
