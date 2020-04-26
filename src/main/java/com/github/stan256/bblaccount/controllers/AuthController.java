@@ -64,9 +64,9 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("Couldn't create refresh token for: [" + loginRequest + "]"));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public ResponseEntity<User> registerUser(@Valid @RequestBody RegistrationRequest registrationRequest) {
-
+        log.info("registration");
         return authService.registerUser(registrationRequest)
                 .map(user -> {
                     UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
