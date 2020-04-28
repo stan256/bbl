@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/auth/stas")
 public class AuthController {
     private final AuthService authService;
     private final JwtTokenProvider tokenProvider;
@@ -64,7 +64,7 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("Couldn't create refresh token for: [" + loginRequest + "]"));
     }
 
-    @PostMapping("/registration")
+    @PostMapping("registration")
     public ResponseEntity<User> registerUser(@Valid @RequestBody RegistrationRequest registrationRequest) {
         log.info("registration");
         return authService.registerUser(registrationRequest)
