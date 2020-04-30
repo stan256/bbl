@@ -1,5 +1,6 @@
 package com.github.stan256.bblaccount.config;
 
+import freemarker.cache.FileTemplateLoader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
+import java.io.File;
 import java.util.Properties;
 
 @Configuration
@@ -49,7 +51,9 @@ public class MailConfig {
     @Primary
     public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
         FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-        bean.setTemplateLoaderPath("/templates/");
+        bean.setTemplateLoaderPath("classpath:/templates/");
+        bean.setPreferFileSystemAccess(true);
+        bean.setDefaultEncoding("UTF-8");
         return bean;
     }
 
