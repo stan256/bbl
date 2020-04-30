@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/auth/stas")
+@RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
     private final JwtTokenProvider tokenProvider;

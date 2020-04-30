@@ -8,7 +8,6 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import java.util.Optional;
 import java.util.Set;
 
-@RepositoryRestController
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findByRole(RoleName role);
 }

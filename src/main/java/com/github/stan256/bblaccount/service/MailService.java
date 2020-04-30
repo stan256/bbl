@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
@@ -39,6 +40,11 @@ public class MailService {
     public MailService(JavaMailSender mailSender, Configuration templateConfiguration) {
         this.mailSender = mailSender;
         this.templateConfiguration = templateConfiguration;
+    }
+
+    @PostConstruct
+    public void post(){
+        System.out.println();
     }
 
     public void sendEmailVerification(String emailVerificationUrl, String to) throws IOException, TemplateException, MessagingException {
