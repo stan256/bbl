@@ -5,13 +5,19 @@ import lombok.Data;
 
 @Data
 public class JwtAuthenticationResponse {
+    private Long id;
+    private String email;
+    private String firstName;
+    private String lastName;
     private String accessToken;
     private String refreshToken;
-    private Long expiryDuration;
 
-    public JwtAuthenticationResponse(String accessToken, String refreshToken, Long expiryDuration) {
+    public JwtAuthenticationResponse(Long id, String email, String firstName, String lastName, String accessToken, String refreshToken) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.accessToken = "Bearer " + accessToken;
         this.refreshToken = refreshToken;
-        this.expiryDuration = expiryDuration;
     }
 }
