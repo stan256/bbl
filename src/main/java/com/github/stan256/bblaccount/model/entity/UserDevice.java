@@ -26,7 +26,7 @@ public class UserDevice extends DateAudit {
     private DeviceType deviceType;
 
     @Column(name = "notification_token")
-    private String notificationToken;
+    private String accessToken;
 
     @Column(name = "device_id", nullable = false)
     private String deviceId;

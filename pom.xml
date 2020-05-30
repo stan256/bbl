@@ -11,7 +11,7 @@
     <groupId>com.github.stan256</groupId>
     <artifactId>bbl</artifactId>
     <version>0.0.1</version>
-    <name>bbl-account</name>
+    <name>bbl</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

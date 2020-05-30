@@ -18,7 +18,6 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
       $                 # end-of-string
 
       * */
-      System.out.println("matches " + obj.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}$"));
       return obj.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}$");
    }
 }

@@ -29,13 +29,11 @@ import java.util.Optional;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
-    private final JwtTokenProvider tokenProvider;
     private final ApplicationEventPublisher publisher;
 
     @Autowired
-    public AuthController(AuthService authService, JwtTokenProvider tokenProvider, ApplicationEventPublisher publisher) {
+    public AuthController(AuthService authService, ApplicationEventPublisher publisher) {
         this.authService = authService;
-        this.tokenProvider = tokenProvider;
         this.publisher = publisher;
     }
 

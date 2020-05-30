@@ -32,7 +32,7 @@ public class UserDeviceService {
         UserDevice userDevice = new UserDevice();
         userDevice.setDeviceId(deviceInfo.getDeviceId());
         userDevice.setDeviceType(deviceInfo.getDeviceType());
-        userDevice.setNotificationToken(deviceInfo.getNotificationToken());
+        userDevice.setAccessToken(deviceInfo.getNotificationToken());
         userDevice.setRefreshActive(true);
         return userDevice;
     }
