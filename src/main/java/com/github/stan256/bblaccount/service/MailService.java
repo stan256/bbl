@@ -44,7 +44,6 @@ public class MailService {
 
     @PostConstruct
     public void post(){
-        System.out.println();
     }
 
     public void sendEmailVerification(String emailVerificationUrl, String to) throws IOException, TemplateException, MessagingException {

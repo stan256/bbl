@@ -25,7 +25,7 @@ public class UserDevice extends DateAudit {
     @Enumerated(value = EnumType.STRING)
     private DeviceType deviceType;
 
-    @Column(name = "notification_token")
+    @Column(name = "access_token")
     private String accessToken;
 
     @Column(name = "device_id", nullable = false)
