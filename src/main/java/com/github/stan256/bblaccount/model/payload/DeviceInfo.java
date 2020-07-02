@@ -18,7 +18,4 @@ public class DeviceInfo {
 
     @NotNull
     private DeviceType deviceType;
-
-    @NullOrNotBlank
-    private String notificationToken;
 }
