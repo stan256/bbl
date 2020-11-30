@@ -19,14 +19,13 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class MailService {
 
-    // todo
-    private final net.sargue.mailgun.Configuration configuration =
-            new net.sargue.mailgun.Configuration("sandbox81cf0746c2ad4d9ca0cf5a6e3fbd535b.mailgun.org",
-                    "1a117e660eb0de0a5d3947fd1ab4ec14-95f6ca46-971b88c4",
-                    "Boobl Mailgun Sandbox <postmaster@sandbox81cf0746c2ad4d9ca0cf5a6e3fbd535b.mailgun.org>");
-
-
     private final Configuration templateConfiguration;
+
+    private final net.sargue.mailgun.Configuration mailConfig = new net.sargue.mailgun.Configuration(
+            "sandboxd65fe7d77cab480ca72ce23ae79c6fd0.mailgun.org",
+            "79407001ac0420ee5eae1cace7b6f96a-95f6ca46-930e60ce",
+            "boobl trips"
+    );
 
     @Value("${app.velocity.templates.location}")
     private String basePackagePath;
@@ -48,7 +47,7 @@ public class MailService {
 
     public void sendEmailVerification(String emailVerificationUrl, String to) throws IOException, TemplateException {
         MailModel mailModel = new MailModel();
-        mailModel.setSubject("Email Verification [Team CEP]");
+        mailModel.setSubject("Email Verification");
         mailModel.setTo(to);
         mailModel.setFrom(mailFrom);
         mailModel.getModel().put("userName", to);
@@ -95,10 +94,10 @@ public class MailService {
     }
 
     public void send(MailModel mailModel) {
-        Mail.using(configuration)
+        Mail.using(mailConfig)
                 .to(mailModel.getTo())
                 .subject(mailModel.getSubject())
-                .text(mailModel.getContent())
+                .html(mailModel.getContent())
                 .from(mailModel.getFrom())
                 .build()
                 .send();
