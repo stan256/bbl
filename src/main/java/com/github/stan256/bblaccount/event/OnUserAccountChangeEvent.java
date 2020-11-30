@@ -2,9 +2,11 @@ package com.github.stan256.bblaccount.event;
 
 import com.github.stan256.bblaccount.model.entity.User;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.context.ApplicationEvent;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class OnUserAccountChangeEvent extends ApplicationEvent {
     private User user;
     private String action;

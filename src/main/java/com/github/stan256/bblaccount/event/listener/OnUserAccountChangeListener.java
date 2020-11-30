@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 
 @Component
@@ -40,7 +39,7 @@ public class OnUserAccountChangeListener implements ApplicationListener<OnUserAc
 
         try {
             mailService.sendAccountChangeEmail(action, actionStatus, recipientAddress);
-        } catch (IOException | TemplateException | MessagingException e) {
+        } catch (IOException | TemplateException e) {
             log.error(e.toString());
             throw new RuntimeException("Account Change Mail. " + recipientAddress);
         }
