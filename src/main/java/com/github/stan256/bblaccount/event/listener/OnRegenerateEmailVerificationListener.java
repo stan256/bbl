@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 
 @Slf4j
@@ -46,7 +45,7 @@ public class OnRegenerateEmailVerificationListener implements ApplicationListene
                 event.getRedirectUrl().queryParam("token", emailVerificationToken.getToken()).toUriString();
         try {
             mailService.sendEmailVerification(emailConfirmationUrl, recipientAddress);
-        } catch (IOException | TemplateException | MessagingException e) {
+        } catch (IOException | TemplateException e) {
             log.error(e.toString());
             throw new RuntimeException("Email Verification failed. " + recipientAddress);
         }

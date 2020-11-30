@@ -10,7 +10,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Mail {
+public class MailModel {
     private String from;
     private String to;
     private String subject;

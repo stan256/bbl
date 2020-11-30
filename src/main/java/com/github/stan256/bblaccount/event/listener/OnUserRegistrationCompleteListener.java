@@ -7,13 +7,9 @@ import com.github.stan256.bblaccount.service.MailService;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionalEventListener;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 
 @Slf4j
@@ -45,7 +41,7 @@ public class OnUserRegistrationCompleteListener {
 
         try {
             mailService.sendEmailVerification(emailConfirmationUrl, recipientAddress);
-        } catch (IOException | TemplateException | MessagingException e) {
+        } catch (IOException | TemplateException e) {
             throw new RuntimeException("Email Verification: " + recipientAddress, e);
         }
     }
