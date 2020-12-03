@@ -1,15 +1,19 @@
 package com.github.stan256.bblaccount.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.stan256.bblaccount.model.RoleName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Data
 @EqualsAndHashCode(of = {"id"}, callSuper = false)

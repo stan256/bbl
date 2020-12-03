@@ -10,7 +10,6 @@ import com.github.stan256.bblaccount.model.entity.User;
 import com.github.stan256.bblaccount.model.payload.RegistrationRequest;
 import com.github.stan256.bblaccount.model.payload.UpdatePasswordRequest;
 import com.github.stan256.bblaccount.security.JwtTokenProvider;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
