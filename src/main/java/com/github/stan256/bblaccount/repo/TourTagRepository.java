@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface TourTagRepository extends JpaRepository<TourTag, Long> {
     Optional<TourTag> findByTag(String tag);
 
-    @Query("select t from tour_tags t where t.tag like %?1")
+    @Query("select t from tour_tags t where LOWER(t.tag) LIKE LOWER(concat(?1, '%'))")
     List<TourTag> findByStartsWith(String text);
 }

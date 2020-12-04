@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface TourRestrictionRepository extends JpaRepository<TourRestriction, Long> {
     Optional<TourRestriction> findByRestriction(String restriction);
 
-    @Query("select t from tour_restrictions t where t.restriction like %?1")
+    @Query("select t from tour_restrictions t where LOWER(t.restriction) LIKE LOWER(concat(?1, '%'))")
     List<TourRestriction> findByStartsWith(String text);
 }

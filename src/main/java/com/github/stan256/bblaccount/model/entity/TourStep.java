@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
@@ -28,6 +29,10 @@ public class TourStep extends DateAudit {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tour_step_id")
     @SequenceGenerator(name = "tour_step_id", sequenceName = "tour_step_id_seq", initialValue = 200, allocationSize = 1)
     private Long id;
+
+    @Column(name = "tour_id", nullable = false)
+    @NotNull
+    private Long tourId;
 
     @Column(name = "location", nullable = false)
     @Size(max = 200)

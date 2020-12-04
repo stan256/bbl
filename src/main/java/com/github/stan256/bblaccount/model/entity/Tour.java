@@ -8,10 +8,13 @@ import lombok.experimental.Accessors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
@@ -47,12 +50,18 @@ public class Tour extends DateAudit {
     @Max(50)
     private int maxPeopleNumber;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tour_id")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "tours_tour_tags",
+            joinColumns = {@JoinColumn(name = "tour_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tour_tag_id")}
+    )
     private List<TourTag> tourTags;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tour_id")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "tours_tour_restrictions",
+            joinColumns = {@JoinColumn(name = "tour_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tour_restriction_id")}
+    )
     private List<TourRestriction> tourRestrictions;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
